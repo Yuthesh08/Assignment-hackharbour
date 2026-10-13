@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuthesh K – Engineering student</title>
+  <meta name="description" content="Personal portfolio: skills, projects, experience and contact." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { paper: "#F2F5F7", ink: "#12222B", muted: "#4F6370", line: "#CBD6DD", accent: "#0B6E6E", mark: "#F0C84B" },
+          fontFamily: {
+            display: ['"Bricolage Grotesque"', "system-ui", "sans-serif"],
+            sans: ['"IBM Plex Sans"', "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    :focus-visible { outline: 2px solid #0B6E6E; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  </style>
+</head>
+
+<body class="bg-paper text-ink font-sans antialiased min-h-screen flex flex-col">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:bg-ink focus:text-paper focus:px-3 focus:py-2">Skip to content</a>
+
+  <header id="site-header"></header>
+  <main id="main" tabindex="-1" class="flex-1 focus:outline-none"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+    /* =========================================================
+       1. CONTENT  — edit this block only
+       ========================================================= */
+    const site = {
+      name: "Yuthesh K",
+      role: "Engineering student",
+      headline: "I build simple websites that solve real problems.",
+      intro: "I'm a second-year engineering student at Sahyadri College of Engineering and Management in Mangalore. I enjoy learning web development and building useful projects.",
+      location: "Mangalore, India",
+      email: "you@example.com",
+      // Optional: paste a Formspree URL (https://formspree.io/f/xxxx) to receive form messages.
+      // If empty, the form opens the visitor's email app instead.
+      formEndpoint: "",
+      socials: [
+        { label: "GitHub", href: "https://github.com/your-handle" },
+        { label: "LinkedIn", href: "https://linkedin.com/in/your-handle" },
+      ],
+    };
+
+    const skills = [
+      { group: "Web", items: ["HTML", "CSS", "JavaScript", "Tailwind CSS"] },
+      { group: "Programming", items: ["C", "Python", "Java"] },
+      { group: "Tools", items: ["Git & GitHub", "VS Code", "Figma"] },
+    ];
+
+    const projects = [
+      { slug: "blood-donor-finder", title: "Blood Donor Finder", year: 2026,
+        summary: "A website that helps people find blood donors by blood group and location.",
+        description: "In an emergency, finding a matching blood donor quickly matters. This website lets people search for donors by blood group and area, and lets donors register themselves.",
+        tags: ["HTML", "CSS", "JavaScript"],
+        repo: "https://github.com/your-handle/blood-donor-finder",
+        highlights: ["Search donors by blood group and location", "Simple registration form for new donors", "Works on phones and laptops"] },
+      { slug: "student-skill-bridge", title: "Student Skill Bridge", year: 2026,
+        summary: "A website that connects students with the skills they want to learn.",
+        description: "Student Skill Bridge helps students discover skills, share what they know, and learn from each other in one place.",
+        tags: ["HTML", "CSS", "JavaScript"],
+        repo: "https://github.com/your-handle/student-skill-bridge",
+        highlights: ["Browse skills in one place", "Clean, easy-to-use layout", "Responsive design for mobile"] },
+    ];
+
+    const experience = [
+      { role: "Student Developer", company: "Sahyadri College of Engineering and Management", period: "2025 – present",
+        points: ["Built web projects as part of college coursework and self-learning.", "Learning HTML, CSS, JavaScript and Git through hands-on practice."] },
+    ];
+
+    const education = { degree: "B.E. in Engineering (2nd year)", school: "Sahyadri College of Engineering and Management", period: "2025 – 2029" };
+
+    // Add achievements here (certificates, competitions, etc). The section stays hidden while this list is empty.
+    const achievements = [];
+
+    /* =========================================================
+       2. COMPONENTS — functions that take props, return HTML
+       ========================================================= */
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+    const Container = ({ children, className = "" }) =>
+      `<div class="mx-auto w-full max-w-5xl px-5 sm:px-8 ${className}">${children}</div>`;
+
+    const Tag = ({ label }) =>
+      `<span class="rounded bg-ink/5 px-2 py-0.5 text-xs font-medium text-muted">${esc(label)}</span>`;
+
+    const Button = ({ label, href, variant = "solid", external = false, className = "", attrs = "" }) => {
+      const base = "inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed";
+      const style = variant === "solid" ? "bg-ink text-paper hover:bg-accent" : "border border-ink text-ink hover:bg-ink hover:text-paper";
+      const cls = `${base} ${style} ${className}`;
+      if (href) {
+        const ext = external ? 'target="_blank" rel="noopener noreferrer"' : "";
+        return `<a href="${esc(href)}" ${ext} class="${cls}">${esc(label)}</a>`;
+      }
+      return `<button class="${cls}" ${attrs}>${esc(label)}</button>`;
+    };
+
+    const SectionHeading = ({ title, intro }) => `
+      <div class="mb-8 max-w-xl">
+        <h2 class="font-display text-3xl font-semibold tracking-tight sm:text-4xl">${esc(title)}</h2>
+        ${intro ? `<p class="mt-3 text-muted">${esc(intro)}</p>` : ""}
+      </div>`;
+
+    const SkillGroup = ({ group, items }) => `
+      <div>
+        <h3 class="font-display text-lg font-semibold">${esc(group)}</h3>
+        <ul class="mt-3 space-y-1.5 text-muted">${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
+      </div>`;
+
+    const ProjectCard = (p) => `
+      <a href="#/projects/${esc(p.slug)}" class="group flex h-full flex-col rounded-md border border-line p-5 transition-colors hover:border-accent">
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="font-display text-xl font-semibold group-hover:text-accent">${esc(p.title)}</h3>
+          <span class="text-sm text-muted">${p.year}</span>
+        </div>
+        <p class="mt-2 flex-1 text-muted">${esc(p.summary)}</p>
+        <div class="mt-4 flex flex-wrap gap-2">${p.tags.map((t) => Tag({ label: t })).join("")}</div>
+      </a>`;
+
+    const ProjectRow = (p) => `
+      <li>
+        <a href="#/projects/${esc(p.slug)}" class="group grid gap-2 py-6 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-8">
+          <div>
+            <h3 class="font-display text-2xl font-semibold group-hover:text-accent">${esc(p.title)}</h3>
+            <p class="mt-1 text-muted">${esc(p.summary)}</p>
+          </div>
+          <div class="flex flex-wrap gap-2 sm:justify-end">${p.tags.map((t) => Tag({ label: t })).join("")}</div>
+        </a>
+      </li>`;
+
+    const TimelineItem = (job) => `
+      <li class="relative border-l-2 border-line pb-10 pl-6 last:pb-0">
+        <span class="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full bg-accent" aria-hidden="true"></span>
+        <p class="text-sm text-muted">${esc(job.period)}</p>
+        <h3 class="font-display text-xl font-semibold">${esc(job.role)}</h3>
+        <p class="text-muted">${esc(job.company)}</p>
+        <ul class="mt-3 list-disc space-y-1.5 pl-5">${job.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
+      </li>`;
+
+    const Field = ({ label, name, control }) => `
+      <div>
+        <label for="${name}" class="mb-1.5 block text-sm font-medium">${esc(label)}</label>
+        ${control}
+        <p id="${name}-error" role="alert" class="mt-1.5 hidden text-sm text-red-700"></p>
+      </div>`;
+
+    /* ---- Navbar / Footer ---- */
+    const navLinks = [
+      { href: "#/", label: "Home", match: (p) => p === "/" },
+      { href: "#/projects", label: "Projects", match: (p) => p.startsWith("/projects") },
+      { href: "#/experience", label: "Experience", match: (p) => p.startsWith("/experience") },
+      { href: "#/contact", label: "Contact", match: (p) => p.startsWith("/contact") },
+    ];
+
+    const Navbar = (path, menuOpen) => `
+      <div class="sticky top-0 z-20 border-b border-line bg-paper/90 backdrop-blur">
+        ${Container({ className: "flex h-16 items-center justify-between", children: `
+          <a href="#/" class="font-display text-lg font-semibold tracking-tight">${esc(site.name)}</a>
+          <nav aria-label="Main" class="hidden gap-7 sm:flex">
+            ${navLinks.map((l) => `<a href="${l.href}" ${l.match(path) ? 'aria-current="page"' : ""}
+              class="border-b-2 py-1 text-sm ${l.match(path) ? "border-accent font-medium" : "border-transparent text-muted hover:text-ink"}">${l.label}</a>`).join("")}
+          </nav>
+          <button id="menu-toggle" class="rounded-md border border-line px-3 py-1.5 text-sm sm:hidden" aria-expanded="${menuOpen}" aria-controls="mobile-nav">${menuOpen ? "Close" : "Menu"}</button>` })}
+        ${menuOpen ? `<nav id="mobile-nav" aria-label="Mobile" class="border-t border-line sm:hidden">
+          ${Container({ className: "flex flex-col py-2", children: navLinks.map((l) => `<a href="${l.href}" ${l.match(path) ? 'aria-current="page"' : ""}
+            class="py-3 text-base ${l.match(path) ? "font-medium text-accent" : ""}">${l.label}</a>`).join("") })}
+        </nav>` : ""}
+      </div>`;
+
+    const Footer = () => `
+      <div class="mt-24 border-t border-line py-10 text-sm text-muted">
+        ${Container({ className: "flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between", children: `
+          <p>© ${new Date().getFullYear()} ${esc(site.name)}</p>
+          <ul class="flex gap-5">
+            ${site.socials.map((s) => `<li><a href="${esc(s.href)}" target="_blank" rel="noopener noreferrer" class="hover:text-ink">${esc(s.label)}</a></li>`).join("")}
+            <li><a href="mailto:${esc(site.email)}" class="hover:text-ink">Email</a></li>
+          </ul>` })}
+      </div>`;
+
+    /* =========================================================
+       3. PAGES
+       ========================================================= */
+    const HomePage = () => `
+      <section class="border-b border-line py-20 sm:py-28">
+        ${Container({ children: `
+          <p class="text-muted">${esc(site.name)} · ${esc(site.role)} · ${esc(site.location)}</p>
+          <h1 class="mt-5 max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl">${esc(site.headline)}</h1>
+          <p class="mt-6 max-w-xl text-lg text-muted">${esc(site.intro)}</p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            ${Button({ label: "View projects", href: "#/projects" })}
+            ${Button({ label: "Get in touch", href: "#/contact", variant: "outline" })}
+          </div>` })}
+      </section>
+
+      <section class="pt-20">
+        ${Container({ children: `
+          ${SectionHeading({ title: "Selected projects" })}
+          <ul class="divide-y divide-line border-y border-line">${projects.slice(0, 3).map(ProjectRow).join("")}</ul>
+          <p class="mt-5"><a href="#/projects" class="text-sm font-medium text-accent underline underline-offset-4">All projects</a></p>` })}
+      </section>
+
+      <section class="pt-20">
+        ${Container({ children: `
+          ${SectionHeading({ title: "Skills", intro: "The tools I reach for most often." })}
+          <div class="grid gap-8 sm:grid-cols-3">${skills.map(SkillGroup).join("")}</div>` })}
+      </section>
+      ${achievements.length ? `<section class="pt-20">
+        ${Container({ children: `
+          ${SectionHeading({ title: "Achievements" })}
+          <ul class="max-w-2xl space-y-3">${achievements.map((a) => `<li class="border-l-4 border-mark pl-4">${esc(a)}</li>`).join("")}</ul>` })}
+      </section>` : ""}`;
+
+    const ProjectsPage = () => `
+      ${Container({ className: "pt-16", children: `
+        ${SectionHeading({ title: "Projects", intro: "Filter by technology or search by name." })}
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div id="tag-filters" role="group" aria-label="Filter by technology" class="flex flex-wrap gap-2"></div>
+          <div>
+            <label for="project-search" class="sr-only">Search projects</label>
+            <input id="project-search" type="search" placeholder="Search projects" class="w-full rounded-md border border-line bg-white px-3 py-2 text-sm sm:w-56" />
+          </div>
+        </div>
+        <ul id="project-list" class="grid gap-5 sm:grid-cols-2"></ul>
+        <p id="project-empty" class="hidden text-muted">No projects match. Clear the search or pick a different technology.</p>` })}`;
+
+    const ProjectDetailPage = (slug) => {
+      const p = projects.find((x) => x.slug === slug);
+      if (!p) return NotFoundPage("Project not found", "The link may be wrong, or the project was removed.", "#/projects", "See all projects");
+      return Container({ className: "max-w-3xl pt-16", children: `
+        <a href="#/projects" class="text-sm text-muted hover:text-ink">Back to projects</a>
+        <h1 class="mt-6 font-display text-4xl font-semibold tracking-tight sm:text-5xl">${esc(p.title)}</h1>
+        <p class="mt-2 text-muted">${p.year}</p>
+        <div class="mt-4 flex flex-wrap gap-2">${p.tags.map((t) => Tag({ label: t })).join("")}</div>
+        <p class="mt-8 text-lg">${esc(p.description)}</p>
+        <h2 class="mt-10 font-display text-2xl font-semibold">Highlights</h2>
+        <ul class="mt-4 list-disc space-y-2 pl-5">${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+        <div class="mt-10 flex flex-wrap gap-3">
+          ${p.live ? Button({ label: "Open live site", href: p.live, external: true }) : ""}
+          ${p.repo ? Button({ label: "View source", href: p.repo, external: true, variant: "outline" }) : ""}
+        </div>` });
+    };
+
+    const ExperiencePage = () =>
+      Container({ className: "max-w-3xl pt-16", children: `
+        ${SectionHeading({ title: "Experience" })}
+        <ol>${experience.map(TimelineItem).join("")}</ol>
+        <h2 class="mt-16 font-display text-2xl font-semibold">Education</h2>
+        <p class="mt-3 font-medium">${esc(education.degree)}</p>
+        <p class="text-muted">${esc(education.school)} · ${esc(education.period)}</p>` });
+
+    const inputCls = "w-full rounded-md border border-line bg-white px-3 py-2.5 aria-[invalid=true]:border-red-700";
+
+    const ContactPage = () =>
+      Container({ className: "max-w-2xl pt-16", children: `
+        ${SectionHeading({ title: "Contact", intro: `Send a message here or write to ${site.email}.` })}
+        <div id="contact-root">
+          <form id="contact-form" novalidate class="space-y-5">
+            ${Field({ label: "Name", name: "name", control: `<input id="name" name="name" type="text" autocomplete="name" class="${inputCls}" />` })}
+            ${Field({ label: "Email", name: "email", control: `<input id="email" name="email" type="email" autocomplete="email" class="${inputCls}" />` })}
+            ${Field({ label: "Message", name: "message", control: `<textarea id="message" name="message" rows="6" class="${inputCls}"></textarea>` })}
+            <p id="form-error" role="alert" class="hidden text-sm text-red-700"></p>
+            ${Button({ label: "Send message", attrs: 'type="submit" id="submit-btn"' })}
+          </form>
+        </div>` });
+
+    const NotFoundPage = (title = "Page not found", text = "Check the address, or go back to the home page.", href = "#/", label = "Go home") =>
+      Container({ className: "pt-24", children: `
+        <h1 class="font-display text-4xl font-semibold">${esc(title)}</h1>
+        <p class="mt-3 text-muted">${esc(text)}</p>
+        ${Button({ label, href, className: "mt-6" })}` });
+
+    /* =========================================================
+       4. ROUTER (hash-based, no server needed)
+       ========================================================= */
+    const routes = [
+      { pattern: /^\/$/, title: `${site.name} – ${site.role}`, view: HomePage, after: null },
+      { pattern: /^\/projects$/, title: `Projects | ${site.name}`, view: ProjectsPage, after: initProjects },
+      { pattern: /^\/projects\/([\w-]+)$/, title: `Project | ${site.name}`, view: (m) => ProjectDetailPage(m[1]) },
+      { pattern: /^\/experience$/, title: `Experience | ${site.name}`, view: ExperiencePage },
+      { pattern: /^\/contact$/, title: `Contact | ${site.name}`, view: ContactPage, after: initContact },
+    ];
+
+    let menuOpen = false;
+    const $ = (s) => document.querySelector(s);
+    const currentPath = () => (location.hash.replace(/^#/, "") || "/").replace(/(.)\/$/, "$1");
+
+    function renderChrome() {
+      $("#site-header").innerHTML = Navbar(currentPath(), menuOpen);
+      $("#menu-toggle").addEventListener("click", () => { menuOpen = !menuOpen; renderChrome(); });
+      $("#site-header").querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { menuOpen = false; }));
+    }
+
+    function render() {
+      const path = currentPath();
+      menuOpen = false;
+      let matched = null;
+      for (const r of routes) {
+        const m = path.match(r.pattern);
+        if (m) { matched = { r, m }; break; }
+      }
+      const main = $("#main");
+      if (matched) {
+        main.innerHTML = matched.r.view(matched.m);
+        const slug = matched.m[1];
+        const proj = slug && projects.find((p) => p.slug === slug);
+        document.title = proj ? `${proj.title} | ${site.name}` : matched.r.title;
+        if (matched.r.after) matched.r.after();
+      } else {
+        main.innerHTML = NotFoundPage();
+        document.title = `Page not found | ${site.name}`;
+      }
+      renderChrome();
+      $("#site-footer").innerHTML = Footer();
+      window.scrollTo(0, 0);
+      main.focus({ preventScroll: true });
+    }
+
+    window.addEventListener("hashchange", render);
+    window.addEventListener("DOMContentLoaded", render);
+
+    /* =========================================================
+       5. INTERACTIVITY — project filter + contact form
+       ========================================================= */
+    function initProjects() {
+      let query = "";
+      let tag = "All";
+      const allTags = ["All", ...Array.from(new Set(projects.flatMap((p) => p.tags))).sort()];
+
+      function paintFilters() {
+        $("#tag-filters").innerHTML = allTags.map((t) => `
+          <button data-tag="${esc(t)}" aria-pressed="${tag === t}"
+            class="rounded-full border px-3 py-1 text-sm transition-colors ${tag === t ? "border-ink bg-ink text-paper" : "border-line text-muted hover:border-ink hover:text-ink"}">${esc(t)}</button>`).join("");
+      }
+
+      function paintList() {
+        const q = query.trim().toLowerCase();
+        const visible = projects.filter((p) =>
+          (tag === "All" || p.tags.includes(tag)) &&
+          (q === "" || `${p.title} ${p.summary}`.toLowerCase().includes(q)));
+        $("#project-list").innerHTML = visible.map((p) => `<li>${ProjectCard(p)}</li>`).join("");
+        $("#project-empty").classList.toggle("hidden", visible.length > 0);
+      }
+
+      $("#tag-filters").addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-tag]");
+        if (!btn) return;
+        tag = btn.dataset.tag;
+        paintFilters();
+        paintList();
+      });
+      $("#project-search").addEventListener("input", (e) => { query = e.target.value; paintList(); });
+
+      paintFilters();
+      paintList();
+    }
+
+    function validate(v) {
+      const e = {};
+      if (v.name.trim().length < 2) e.name = "Enter your name.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) e.email = "Enter a valid email address.";
+      if (v.message.trim().length < 10) e.message = "Write at least 10 characters.";
+      return e;
+    }
+
+    function showErrors(errors) {
+      ["name", "email", "message"].forEach((f) => {
+        const input = $("#" + f), msg = $("#" + f + "-error");
+        const text = errors[f];
+        input.setAttribute("aria-invalid", text ? "true" : "false");
+        if (text) input.setAttribute("aria-describedby", f + "-error"); else input.removeAttribute("aria-describedby");
+        msg.textContent = text || "";
+        msg.classList.toggle("hidden", !text);
+      });
+    }
+
+    function initContact() {
+      const form = $("#contact-form");
+
+      // Clear a field's error as soon as the visitor edits it.
+      form.addEventListener("input", (e) => {
+        const f = e.target.name;
+        if (!f) return;
+        e.target.setAttribute("aria-invalid", "false");
+        $("#" + f + "-error").classList.add("hidden");
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const values = Object.fromEntries(new FormData(form).entries());
+        const errors = validate(values);
+        showErrors(errors);
+        if (Object.keys(errors).length) {
+          form.querySelector('[aria-invalid="true"]').focus();
+          return;
+        }
+
+        const btn = $("#submit-btn"), formErr = $("#form-error");
+        btn.disabled = true; btn.textContent = "Sending…"; formErr.classList.add("hidden");
+
+        try {
+          if (site.formEndpoint) {
+            const res = await fetch(site.formEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify(values),
+            });
+            if (!res.ok) throw new Error("Request failed");
+          } else {
+            const subject = encodeURIComponent(`Portfolio message from ${values.name}`);
+            const body = encodeURIComponent(`${values.message}\n\nFrom: ${values.name} (${values.email})`);
+            window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+          }
+          $("#contact-root").innerHTML = `
+            <div role="status" class="rounded-md border border-accent p-6">
+              <p class="font-display text-xl font-semibold">${site.formEndpoint ? "Message sent" : "Your email app should open"}</p>
+              <p class="mt-2 text-muted">${site.formEndpoint ? "Thanks for reaching out. I reply within two working days." : "Send the drafted email to finish. If nothing opened, write to " + esc(site.email) + "."}</p>
+              ${Button({ label: "Send another message", variant: "outline", className: "mt-5", attrs: 'id="again-btn"' })}
+            </div>`;
+          $("#again-btn").addEventListener("click", () => { $("#main").innerHTML = ContactPage(); initContact(); });
+        } catch {
+          btn.disabled = false; btn.textContent = "Send message";
+          formErr.textContent = "The message didn't send. Check your connection and try again.";
+          formErr.classList.remove("hidden");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
